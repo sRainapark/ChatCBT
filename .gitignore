@@ -1,0 +1,37 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+.env
+dist/
+build/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# React dev
+*.env
+.env.local
+.env.development
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# VS Code or IDE stuff
+.vscode/
+.idea/
+
+# Py test cache
+.pytest_cache/
+
+# Docker
+*.pid
+*.db
