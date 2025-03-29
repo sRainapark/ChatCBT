@@ -15,7 +15,7 @@ function App() {
     setInput('');
 
     try {
-      const response = await fetch("https://srainapark-cbt-chat-app.hf.space/chat", {
+      const response = await fetch("http://localhost:8001/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

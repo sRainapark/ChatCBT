@@ -1,5 +1,5 @@
 FROM python:3.10-slim
-
+python-dotenv
 WORKDIR /app
 
 COPY requirements.txt .
