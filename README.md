@@ -1,4 +1,4 @@
-# ChatCBT App
+# ChatCBT 💖
 
 This is a warm, supportive chatbot that acts like your best friend trained in Cognitive Behavioral Therapy (CBT) to help you work through negative thoughts one message at a time.
 
