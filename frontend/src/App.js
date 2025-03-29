@@ -1,11 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   const [messages, setMessages] = useState([
-    { text: "Hey Bestie 💖", sender: "bot" },
+    { text: "Hey bestie 💖", sender: "bot" },
   ]);
   const [input, setInput] = useState('');
-
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingDots, setTypingDots] = useState('');
+  useEffect(() => {
+    if (!isTyping) return;
+  
+    const interval = setInterval(() => {
+      setTypingDots(prev => (prev.length >= 3 ? '' : prev + '.'));
+    }, 500);
+  
+    return () => clearInterval(interval);
+  }, [isTyping]);
+  
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -15,7 +26,8 @@ function App() {
     setInput('');
 
     try {
-      const response = await fetch("http://localhost:8001/chat", {
+      setIsTyping(true);
+      const response = await fetch("http://localhost:8000/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -26,7 +38,6 @@ function App() {
           ]
         })
       });
-      
 
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
@@ -35,9 +46,20 @@ function App() {
       const data = await response.json();
       const botMessage = data.reply || "Hmm... no reply received.";
 
-      // Append bot message
-      setMessages(prev => [...prev, { text: botMessage, sender: 'bot' }]);
+      const chunks = botMessage
+        .split(/(?<=[.?!])\s+(?=[A-Z])/g)
+        .filter(Boolean)
+        .slice(0, 2);
+
+      chunks.forEach((chunk, i) => {
+        setTimeout(() => {
+          setMessages(prev => [...prev, { text: chunk.trim(), sender: 'bot' }]);
+        }, i * 600);
+      });
+      setTimeout(() => setIsTyping(false), chunks.length * 600);
+
     } catch (err) {
+      setIsTyping(false);
       console.error("Agent error:", err);
       setMessages(prev => [
         ...prev,
@@ -63,6 +85,12 @@ function App() {
             {msg.text}
           </div>
         ))}
+        {isTyping && (
+          <div className="mr-auto bg-white text-black border rounded-xl px-4 py-2 w-fit max-w-[75%]">
+            {typingDots}
+          </div>
+        )}
+
       </div>
 
       <div className="w-full max-w-md flex gap-2">
