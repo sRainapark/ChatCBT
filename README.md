@@ -6,8 +6,6 @@ This is a warm, supportive chatbot that acts like your best friend trained in Co
 
 Bestie uses structured CBT flows to help users process thoughts gently and effectively.
 
-Tone: non-judgmental, emotionally intelligent, curious.
-
 ## How It’s Made
 
 **Tech Stack:**
